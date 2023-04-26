@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1682505699",
+        "python_version": "3.9.7 (default, Sep 16 2021, 16:59:28) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "D:\\G86\\anaconda3\\Scripts\\mlagents-learn config/HoopAgent.yaml --run-id=JumpAgent --force",
+        "mlagents_version": "0.29.0",
+        "mlagents_envs_version": "0.29.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.1+cu110",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1682505775"
+    },
+    "total": 76.07737440000001,
+    "count": 1,
+    "self": 0.013418400000006159,
+    "children": {
+        "run_training.setup": {
+            "total": 0.29553759999999984,
+            "count": 1,
+            "self": 0.29553759999999984
+        },
+        "TrainerController.start_learning": {
+            "total": 75.7684184,
+            "count": 1,
+            "self": 0.00016860000000917807,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 75.7682064,
+                    "count": 1,
+                    "self": 75.7682064
+                },
+                "TrainerController._save_models": {
+                    "total": 4.339999999558586e-05,
+                    "count": 1,
+                    "self": 4.339999999558586e-05
+                }
+            }
+        }
+    }
+}
