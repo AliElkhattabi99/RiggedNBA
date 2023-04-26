@@ -17,7 +17,7 @@ public class ThrowBallAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        // Reset agent position and rotation
+        /*// Reset agent position and rotation
         this.transform.localPosition = new Vector3(0, 1, 0);
         this.transform.localRotation = Quaternion.identity;
 
@@ -25,6 +25,19 @@ public class ThrowBallAgent : Agent
         ballRb.velocity = Vector3.zero;
         ballRb.angularVelocity = Vector3.zero;
         ballRb.transform.position = ballSpawn.position;
+
+        // Set hasBall to true
+        hasBall = true;
+
+        // Move target to a new random position
+        target.position = new Vector3(Random.Range(-5.0f, 5.0f), 1, Random.Range(-5.0f, 5.0f));*/
+        this.transform.localPosition = new Vector3(0, 1, 0);
+        this.transform.localRotation = Quaternion.identity;
+
+        // Reset ball position and velocity
+        ballRb.velocity = Vector3.zero;
+        ballRb.angularVelocity = Vector3.zero;
+        ballObject.transform.position = ballSpawn.position;
 
         // Set hasBall to true
         hasBall = true;
@@ -64,7 +77,9 @@ public class ThrowBallAgent : Agent
             Vector3 throwForce = new Vector3(throwX * 500, throwY * 500, 1000);
             ballRb.AddForce(throwForce);
             hasBall = false;
+            SetReward(1f);
         }
+
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -86,12 +101,29 @@ public class ThrowBallAgent : Agent
             SetReward(1f);
             EndEpisode();
         }
+
+        if (other.CompareTag("Ball"))
+        {
+            Debug.Log("Ball entered net!");
+            ThrowBallAgent agent = FindObjectOfType<ThrowBallAgent>();
+            agent.SetReward(1f);
+            agent.EndEpisode();
+        }
     }
 
+    /*private void Start()
+    {
+        // Spawn ball
+        GameObject ball = Instantiate(ballPrefab, ballSpawn.position, Quaternion.identity);
+        ballRb = ball.GetComponent<Rigidbody>();
+    }*/
     private void Start()
     {
         // Spawn ball
         GameObject ball = Instantiate(ballPrefab, ballSpawn.position, Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody>();
+
+        // Get reference to ball game object
+        ballObject = ball;
     }
 }
