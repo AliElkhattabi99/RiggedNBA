@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Net
   - Ball
+  - Board
+  - Pole
   layers:
   - Default
   - TransparentFX

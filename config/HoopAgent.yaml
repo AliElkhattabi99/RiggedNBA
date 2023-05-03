@@ -13,6 +13,7 @@ behaviors:
       beta_schedule: constant
       epsilon_schedule: linear
     network_settings:
+      vis_encode_type: simple
       normalize: false
       hidden_units: 128
       num_layers: 2

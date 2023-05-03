@@ -11,9 +11,11 @@ public class ThrowBallAgent : Agent
     public GameObject ballPrefab;
     public Transform target;
     public Transform net;
+    public Transform board;
 
     private Rigidbody ballRb;
     private bool hasBall = true;
+
 
     public override void OnEpisodeBegin()
     {
@@ -31,19 +33,40 @@ public class ThrowBallAgent : Agent
 
         // Move target to a new random position
         target.position = new Vector3(Random.Range(-5.0f, 5.0f), 1, Random.Range(-5.0f, 5.0f));*/
-        this.transform.localPosition = new Vector3(0, 1, 0);
-        this.transform.localRotation = Quaternion.identity;
+
+
+        // Spawn new ball if agent doesn't have one
+        if (!hasBall)
+        {
+            GameObject ball = Instantiate(ballPrefab, ballSpawn.position, Quaternion.identity);
+            ballRb = ball.GetComponent<Rigidbody>();
+            hasBall = true;
+        }
 
         // Reset ball position and velocity
         ballRb.velocity = Vector3.zero;
         ballRb.angularVelocity = Vector3.zero;
-        ballObject.transform.position = ballSpawn.position;
-
-        // Set hasBall to true
-        hasBall = true;
+        ballRb.transform.position = ballSpawn.position;
 
         // Move target to a new random position
-        target.position = new Vector3(Random.Range(-5.0f, 5.0f), 1, Random.Range(-5.0f, 5.0f));
+        //target.position = new Vector3(Random.Range(-5.0f, 5.0f), 1, Random.Range(-5.0f, 5.0f));
+
+        this.transform.localPosition = new Vector3(0, 1, 0);
+        this.transform.localRotation = Quaternion.identity;
+        ballRb.transform.rotation = Quaternion.Euler(-90, 0, 0);
+        
+        if (this.transform.localPosition.y < 0)
+        {
+            this.transform.localPosition = new Vector3(0, 1, 0);
+            this.transform.localRotation = Quaternion.identity;
+            ballRb.transform.rotation = Quaternion.Euler(-90, 0, 0);
+        }
+
+        
+
+
+        // Move target to a new random position
+        //target.position = new Vector3(Random.Range(-5.0f, 5.0f), 1, Random.Range(-5.0f, 5.0f));
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -92,7 +115,7 @@ public class ThrowBallAgent : Agent
         continuousActionsOut[3] = Input.GetAxis("ThrowY");
     }
 
-    private void OnCollisionEnter(Collision collision)
+    /*private void OnCollisionEnter(Collision collision)
     {
         // Check if ball entered net
         if (collision.gameObject.CompareTag("Net"))
@@ -102,28 +125,43 @@ public class ThrowBallAgent : Agent
             EndEpisode();
         }
 
+        
+    }*/
+    private void OnTriggerEnter(Collider other)
+    {
         if (other.CompareTag("Ball"))
         {
             Debug.Log("Ball entered net!");
             ThrowBallAgent agent = FindObjectOfType<ThrowBallAgent>();
             agent.SetReward(1f);
             agent.EndEpisode();
+        }else if(other.CompareTag("Board"))
+        {
+            Debug.Log("Ball hit board!");
+            ThrowBallAgent agent = FindObjectOfType<ThrowBallAgent>();
+            agent.SetReward(-1f);
+            agent.EndEpisode();
+        }else if (transform.localPosition.y < 0)
+        {
+            EndEpisode();
         }
+
+        /*// Check if ball entered net
+        if (other.gameObject.CompareTag("Ball"))
+        {
+            Debug.Log("Ball entered net!");
+            SetReward(1f);
+            EndEpisode();
+        }*/
     }
 
-    /*private void Start()
-    {
-        // Spawn ball
-        GameObject ball = Instantiate(ballPrefab, ballSpawn.position, Quaternion.identity);
-        ballRb = ball.GetComponent<Rigidbody>();
-    }*/
     private void Start()
     {
         // Spawn ball
         GameObject ball = Instantiate(ballPrefab, ballSpawn.position, Quaternion.identity);
         ballRb = ball.GetComponent<Rigidbody>();
 
-        // Get reference to ball game object
-        ballObject = ball;
+
     }
+
 }

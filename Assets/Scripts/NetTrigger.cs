@@ -8,6 +8,7 @@ public class NetTrigger : MonoBehaviour
         {
             Debug.Log("Ball entered net!");
             // Add reward to agent here
+  
             // End episode if needed
         }
     }
