@@ -123,9 +123,9 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &5379292 stripped
+--- !u!4 &34445710 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5646360752068587700, guid: 8ad9e22f7df9d5d489e97b0e5277994f, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5646360752147405592, guid: 8ad9e22f7df9d5d489e97b0e5277994f, type: 3}
   m_PrefabInstance: {fileID: 5646360751609344099}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &89816220 stripped
@@ -301,11 +301,12 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  ballSpawn: {fileID: 5379292}
+  ballSpawn: {fileID: 560191073}
   ballPrefab: {fileID: 1974114116}
   target: {fileID: 1735258481}
   net: {fileID: 89816221}
   board: {fileID: 219572698}
+  ground: {fileID: 34445710}
 --- !u!114 &560191075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DecisionPeriod: 5
+  DecisionPeriod: 4
   TakeActionsBetweenDecisions: 1
 --- !u!54 &560191077
 Rigidbody:
@@ -763,6 +764,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3261782992107036153, guid: 61c039b5b361ca74fb935048622fb7e4, type: 3}
       propertyPath: m_Name
+      value: Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261782992107036153, guid: 61c039b5b361ca74fb935048622fb7e4, type: 3}
+      propertyPath: m_TagString
       value: Ball
       objectReference: {fileID: 0}
     m_RemovedComponents: []
