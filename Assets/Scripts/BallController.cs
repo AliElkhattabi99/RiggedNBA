@@ -23,7 +23,8 @@ namespace PB.Game
             
             if(!other.collider.CompareTag("Ground"))
                 return;
-            controller.AddReward(scored?1:-1);
+            if(controller)
+                controller.AddReward(scored?1:-1);
             Destroy(gameObject,2);
         }
 
